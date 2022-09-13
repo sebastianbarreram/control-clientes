@@ -7,11 +7,16 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UpdateClientComponent } from './components/update-client/update-client.component';
 import { AuthGuard } from './guardians/auth.guard';
+import { ConfigurationGuard } from './guardians/configuration.guard';
 
 const routes: Routes = [
   { path: '', component: BoardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [ConfigurationGuard],
+  },
   {
     path: 'configuration',
     component: ConfigurationComponent,
