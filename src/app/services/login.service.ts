@@ -29,4 +29,16 @@ export class LoginService {
   SignOut(): void {
     this.afAuth.signOut();
   }
+
+  register(
+    email: string,
+    password: string
+  ): Promise<firebase.auth.UserCredential> {
+    return new Promise((resolve, reject) => {
+      this.afAuth.createUserWithEmailAndPassword(email, password).then(
+        (result) => resolve(result),
+        (error) => reject(error)
+      );
+    });
+  }
 }
