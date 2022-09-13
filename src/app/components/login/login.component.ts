@@ -18,20 +18,25 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loginService.getAuth().subscribe((auth) => {
+      if (auth) {
+        this.router.navigate(['/']);
+      }
+    });
+  }
 
-  login() {
+  login(): void {
     this.loginService
       .login(this.email, this.password)
       .then((res) => {
         this.router.navigate(['/']);
       })
       .catch((error) => {
-        this.flashMessaggesService.show(error.message,
-          {
-            cssClass: 'alert-danger',
-            timeout: 4000,
-          })
+        this.flashMessaggesService.show(error.message, {
+          cssClass: 'alert-danger',
+          timeout: 4000,
+        });
       });
   }
 }

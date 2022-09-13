@@ -33,7 +33,7 @@ export class ClientService {
     return this.clients;
   }
 
-  addClient(client: Client) {
+  addClient(client: Client): void {
     this.clientColollection.add(client);
   }
 
@@ -53,12 +53,12 @@ export class ClientService {
     return this.client;
   }
 
-  updateClient(client: Client) {
+  updateClient(client: Client): void {
     this.clientDoc = this.angularFirestore.doc<Client>(`clientes/${client.id}`);
     this.clientDoc.update(client);
   }
 
-  deleteClient(client: Client) {
+  deleteClient(client: Client): void {
     this.clientDoc = this.angularFirestore.doc<Client>(`clientes/${client.id}`);
     this.clientDoc.delete();
   }

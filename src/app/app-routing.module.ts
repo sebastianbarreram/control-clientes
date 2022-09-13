@@ -6,13 +6,22 @@ import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UpdateClientComponent } from './components/update-client/update-client.component';
+import { AuthGuard } from './guardians/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: BoardComponent },
+  { path: '', component: BoardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'configuration', component: ConfigurationComponent },
-  { path: 'client/update/:id', component: UpdateClientComponent },
+  {
+    path: 'configuration',
+    component: ConfigurationComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'client/update/:id',
+    component: UpdateClientComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '**', component: NotFoundComponent },
 ];
 

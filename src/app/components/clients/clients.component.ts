@@ -41,7 +41,7 @@ export class ClientsComponent implements OnInit {
     return saldoTotal;
   }
 
-  agregar({ value, valid }: { value: Client; valid: boolean }) {
+  agregar({ value, valid }: { value: Client; valid: boolean }): void {
     if (!valid) {
       this.flashMessaggesService.show(
         'Por favor llenar el formulario correctamente',
@@ -56,8 +56,8 @@ export class ClientsComponent implements OnInit {
       this.closeModal();
     }
   }
-  
-  private closeModal() {
+
+  private closeModal(): void {
     this.closeButton.nativeElement.click();
   }
 }

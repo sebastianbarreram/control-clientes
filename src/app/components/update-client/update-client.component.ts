@@ -28,12 +28,12 @@ export class UpdateClientComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.clientService.getClient(this.id).subscribe((client) => {
       console.log(client);
-      
+
       this.client = client;
     });
   }
 
-  guardar({ value, valid }: { value: Client; valid: boolean }) {
+  guardar({ value, valid }: { value: Client; valid: boolean }): void {
     if (!valid) {
       this.flashMessaggesService.show(
         'Por favor llenar el formulario correctamente',
@@ -49,7 +49,7 @@ export class UpdateClientComponent implements OnInit {
     }
   }
 
-  eliminar() {
+  eliminar(): void {
     if (confirm('Seguro que quiere eliminar el cliente?')) {
       this.clientService.deleteClient(this.client);
       this.router.navigate(['/']);
