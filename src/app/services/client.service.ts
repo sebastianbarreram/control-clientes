@@ -14,6 +14,7 @@ export class ClientService {
   clientColollection: AngularFirestoreCollection<Client>;
   clientDoc: AngularFirestoreDocument<Client>;
   clients: Observable<Client[]>;
+  client: Observable<Client>;
   constructor(private angularFirestore: AngularFirestore) {
     this.clientColollection = angularFirestore.collection('clientes', (ref) =>
       ref.orderBy('nombre', 'asc')
@@ -30,5 +31,35 @@ export class ClientService {
       })
     );
     return this.clients;
+  }
+
+  addClient(client: Client) {
+    this.clientColollection.add(client);
+  }
+
+  getClient(id: string): Observable<Client> {
+    this.clientDoc = this.angularFirestore.doc<Client>(`clientes/${id}`);
+    this.client = this.clientDoc.snapshotChanges().pipe(
+      map((action) => {
+        if (action.payload.exists === false) {
+          return null;
+        } else {
+          const data = action.payload.data() as Client;
+          data.id = action.payload.id;
+          return data;
+        }
+      })
+    );
+    return this.client;
+  }
+
+  updateClient(client: Client) {
+    this.clientDoc = this.angularFirestore.doc<Client>(`clientes/${client.id}`);
+    this.clientDoc.update(client);
+  }
+
+  deleteClient(client: Client) {
+    this.clientDoc = this.angularFirestore.doc<Client>(`clientes/${client.id}`);
+    this.clientDoc.delete();
   }
 }
